@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { database } from './firebase';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null
+    };
+  }
+
+  componentDidMount() {
+    console.log('Did Mount');
+    database.ref().on('value', (snapshot) => {
+      this.setState({
+        data: snapshot.val()
+      })
+    } ) ;
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <pre className="App-intro">
+          { JSON.stringify(this.state.data, null, 2) }
+        </pre>
+        
       </div>
     );
   }
