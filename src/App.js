@@ -23,7 +23,7 @@ class App extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    database.ref().child('superNewData').set(this.state.newData);
+    database.ref().child('/superNewData/greeting/for/today').push(this.state.newData);
   }
   handleChange(event) {
     const newData = event.target.value;
