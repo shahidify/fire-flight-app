@@ -14,16 +14,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('Did Mount');
-    database.ref().on('value', (snapshot) => {
+    this.dataref = database.ref('/superNewData/'); // or just ref() for the root node
+    this.dataref.once('value', (snapshot) => {
       this.setState({
         data: snapshot.val()
       })
-    } ) ;
+    } );
   }
   handleSubmit(event) {
     event.preventDefault();
-    database.ref().child('/superNewData/greeting/for/today').push(this.state.newData);
+    this.dataref().child('/superNewData/greeting/for/today').push(this.state.newData);
   }
   handleChange(event) {
     const newData = event.target.value;
